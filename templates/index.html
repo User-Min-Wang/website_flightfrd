@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- 英雄区域 -->
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">航空爱好者社区</h1>
+        <p class="lead">连接全球航空爱好者，分享飞行乐趣与知识</p>
+        <a href="{{ url_for('appointments') }}" class="btn btn-warning btn-lg mx-2">开始约拍</a>
+        <a href="{{ url_for('adsb_tracker') }}" class="btn btn-light btn-lg mx-2">追踪航班</a>
+    </div>
+</div>
+
+<!-- 功能介绍 -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="section-title text-center">我们的服务</h2>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="icon mb-3">
+                    <i class="fas fa-camera fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">约拍服务</h5>
+                <p class="card-text">寻找专业摄影师，记录珍贵的航空瞬间，从航展到机场拍摄，满足您的摄影需求。</p>
+                <a href="{{ url_for('appointments') }}" class="btn btn-outline-primary">了解更多</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="icon mb-3">
+                    <i class="fas fa-satellite fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">ADS-B追踪</h5>
+                <p class="card-text">实时追踪全球航班动态，查看飞行高度、速度、机型等详细信息，探索空中交通奥秘。</p>
+                <a href="{{ url_for('adsb_tracker') }}" class="btn btn-outline-primary">开始追踪</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="icon mb-3">
+                    <i class="fas fa-calendar-alt fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">航展日历</h5>
+                <p class="card-text">获取全球航空展览和活动信息，不错过任何精彩的航空盛宴，提前规划您的观展行程。</p>
+                <a href="{{ url_for('calendar') }}" class="btn btn-outline-primary">查看日历</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="icon mb-3">
+                    <i class="fas fa-star fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">特别航班提醒</h5>
+                <p class="card-text">关注特殊航班动态，包括新机型首飞、纪念航班、特殊涂装等，第一时间获得提醒通知。</p>
+                <a href="{{ url_for('special_flights') }}" class="btn btn-outline-primary">设置提醒</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="icon mb-3">
+                    <i class="fas fa-microphone fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">ATC直播</h5>
+                <p class="card-text">收听空中交通管制实时通信，体验飞行员与管制员的专业对话，感受空中交通的精密协调。</p>
+                <a href="{{ url_for('atc_streams') }}" class="btn btn-outline-primary">收听直播</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 统计数据 -->
+<div class="row bg-light py-5 mb-5 rounded">
+    <div class="col-md-3 text-center">
+        <h3 class="text-primary">1000+</h3>
+        <p>注册用户</p>
+    </div>
+    <div class="col-md-3 text-center">
+        <h3 class="text-primary">500+</h3>
+        <p>活跃摄影师</p>
+    </div>
+    <div class="col-md-3 text-center">
+        <h3 class="text-primary">24/7</h3>
+        <p>航班追踪</p>
+    </div>
+    <div class="col-md-3 text-center">
+        <h3 class="text-primary">5</h3>
+        <p>核心功能</p>
+    </div>
+</div>
+
+<!-- 最新活动 -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="section-title">最新活动</h2>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">珠海航展2023</h5>
+                <p class="card-text">第十四届中国国际航空航天博览会，汇聚全球顶尖航空技术与产品。</p>
+                <p class="text-muted"><i class="fas fa-calendar-alt"></i> 2023年11月10日 - 11月12日</p>
+                <a href="{{ url_for('calendar') }}" class="btn btn-primary">查看详情</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">A350测试飞行</h5>
+                <p class="card-text">空中客车A350新型号测试飞行，探索最新航空技术进展。</p>
+                <p class="text-muted"><i class="fas fa-calendar-alt"></i> 2023年10月25日</p>
+                <a href="{{ url_for('special_flights') }}" class="btn btn-primary">查看详情</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}特别航班提醒 - 航空爱好者社区{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="section-title">特别航班提醒</h2>
+        <p class="lead">关注特殊航班动态，包括新机型首飞、纪念航班、特殊涂装等</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h3>即将到来的特别航班</h3>
+        {% if flights %}
+        <div class="row">
+            {% for flight in flights %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">{{ flight.flight_number }}</h5>
+                            <span class="badge bg-info">{{ flight.status }}</span>
+                        </div>
+                        <p class="card-text">
+                            {% if flight.airline %}<i class="fas fa-plane"></i> {{ flight.airline }}<br>{% endif %}
+                            {% if flight.aircraft_type %}<i class="fas fa-fighter-jet"></i> {{ flight.aircraft_type }}<br>{% endif %}
+                            {% if flight.departure and flight.destination %}<i class="fas fa-route"></i> {{ flight.departure }} → {{ flight.destination }}<br>{% endif %}
+                            <i class="fas fa-clock"></i> {{ flight.scheduled_time.strftime('%Y年%m月%d日 %H:%M') }}
+                        </p>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-outline-primary" onclick="setReminder('{{ flight.flight_number }}')">
+                                <i class="fas fa-bell"></i> 设置提醒
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-eye"></i> 关注
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>暂无特别航班信息，请添加新的特别航班提醒。</p>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>添加特别航班</h5>
+            </div>
+            <div class="card-body">
+                <form id="flight-form">
+                    <div class="mb-3">
+                        <label for="flight_number" class="form-label">航班号</label>
+                        <input type="text" class="form-control" id="flight_number" placeholder="如: CA100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="airline" class="form-label">航空公司</label>
+                        <input type="text" class="form-control" id="airline" placeholder="如: 中国国航">
+                    </div>
+                    <div class="mb-3">
+                        <label for="aircraft_type" class="form-label">机型</label>
+                        <input type="text" class="form-control" id="aircraft_type" placeholder="如: A350-900">
+                    </div>
+                    <div class="mb-3">
+                        <label for="departure" class="form-label">出发地</label>
+                        <input type="text" class="form-control" id="departure" placeholder="如: 北京首都机场">
+                    </div>
+                    <div class="mb-3">
+                        <label for="destination" class="form-label">目的地</label>
+                        <input type="text" class="form-control" id="destination" placeholder="如: 上海浦东机场">
+                    </div>
+                    <div class="mb-3">
+                        <label for="scheduled_time" class="form-label">计划时间</label>
+                        <input type="datetime-local" class="form-control" id="scheduled_time" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">航班状态</label>
+                        <select class="form-select" id="status">
+                            <option value="scheduled">计划中</option>
+                            <option value="boarding">登机中</option>
+                            <option value="in-flight">飞行中</option>
+                            <option value="delayed">延误</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">添加航班</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>我的提醒</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group" id="reminders-list">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>CA100 首都机场→浦东机场</span>
+                        <span class="badge bg-danger">1天后</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>MU5137 浦东机场→白云机场</span>
+                        <span class="badge bg-warning text-dark">3天后</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>CZ3908 白云机场→咸阳机场</span>
+                        <span class="badge bg-info">1周后</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>特别航班类型</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-6 text-center mb-4">
+                        <div class="p-3 bg-primary text-white rounded">
+                            <i class="fas fa-star fa-2x"></i>
+                            <p class="mb-0 mt-2">首飞航班</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-4">
+                        <div class="p-3 bg-success text-white rounded">
+                            <i class="fas fa-gift fa-2x"></i>
+                            <p class="mb-0 mt-2">纪念航班</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-4">
+                        <div class="p-3 bg-info text-white rounded">
+                            <i class="fas fa-palette fa-2x"></i>
+                            <p class="mb-0 mt-2">特殊涂装</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-4">
+                        <div class="p-3 bg-warning text-dark rounded">
+                            <i class="fas fa-award fa-2x"></i>
+                        <p class="mb-0 mt-2">重要任务</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#flight-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        const flightData = {
+            flight_number: $('#flight_number').val(),
+            airline: $('#airline').val(),
+            aircraft_type: $('#aircraft_type').val(),
+            departure: $('#departure').val(),
+            destination: $('#destination').val(),
+            scheduled_time: $('#scheduled_time').val(),
+            status: $('#status').val()
+        };
+        
+        $.ajax({
+            url: '/api/flights',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(flightData),
+            success: function(response) {
+                alert('特别航班添加成功！');
+                $('#flight-form')[0].reset();
+                // 重新加载页面以显示新创建的航班
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('添加特别航班失败：' + error);
+            }
+        });
+    });
+});
+
+function setReminder(flightNumber) {
+    alert(`已为航班 ${flightNumber} 设置提醒！`);
+}
+</script>
+{% endblock %}
