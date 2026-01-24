@@ -1,29 +1,44 @@
 ```
-# Database
-instance/aviation.db
+# Database files
+*.db
 
 # Dependencies
-venv/
-.venv/
+backend/venv/
+backend/.venv/
+frontend/node_modules/
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Environment
+.Python
+env/
+venv/
+ENV/
+.venv/
 .env
 .env.local
-*.env.*
+.env.*
+
+# Build artifacts
+backend/dist/
+backend/build/
+frontend/dist/
+frontend/build/
+target/
+.DS_Store
+Thumbs.db
 
 # Logs
 *.log
 
 # Coverage
 .coverage
-htmlcov/
 coverage/
+htmlcov/
 
-# Editor/IDE
+# IDE
 .vscode/
 .idea/
 *.swp

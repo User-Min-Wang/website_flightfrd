@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 import os
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../frontend/src/templates')
 app.config['SECRET_KEY'] = 'your-secret-key-here'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aviation.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
