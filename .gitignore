@@ -2,50 +2,28 @@
 # Database files
 *.db
 
-# Dependencies
-backend/venv/
-backend/.venv/
-frontend/node_modules/
+# Environment files
+.env
+.env.local
+*.env.*
 
-# Python
+# Dependencies
+.venv/
+venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
-venv/
-ENV/
-.venv/
-.env
-.env.local
-.env.*
 
-# Build artifacts
-backend/dist/
-backend/build/
-frontend/dist/
-frontend/build/
-target/
-.DS_Store
-Thumbs.db
-
-# Logs
+# Logs and temp files
 *.log
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
 *.tmp
 
-# OS
+# Editors
+.vscode/
+.idea/
+
+# OS generated files
 .DS_Store
 Thumbs.db
 ```

@@ -1,125 +1,67 @@
-from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+import json
+from flask import Flask, render_template, jsonify
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
-app = Flask(__name__, template_folder='../frontend/src/templates')
-app.config['SECRET_KEY'] = 'your-secret-key-here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aviation.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app = Flask(__name__, 
+    template_folder='../frontend/src/templates',
+    static_folder='../static'
+)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# JSON数据文件路径
+DATA_FILE = '../data/aviation_data.json'
 
-# 数据模型定义
-class Appointment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    photographer_name = db.Column(db.String(100), nullable=False)
-    location = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    description = db.Column(db.Text)
-    contact_info = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+def load_data():
+    """加载JSON数据"""
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        return {"flights": [], "airports": []}
 
-class FlightEvent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    flight_number = db.Column(db.String(20), nullable=False)
-    airline = db.Column(db.String(100))
-    aircraft_type = db.Column(db.String(50))
-    departure = db.Column(db.String(100))
-    destination = db.Column(db.String(100))
-    scheduled_time = db.Column(db.DateTime)
-    status = db.Column(db.String(50), default='scheduled')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+def save_data(data):
+    """保存JSON数据"""
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
-class AviationEvent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    event_type = db.Column(db.String(50))  # airshow, exhibition, etc.
-    location = db.Column(db.String(200))
-    start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date)
-    description = db.Column(db.Text)
-    website = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-# 路由定义
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/appointments')
-def appointments():
-    appointments = Appointment.query.all()
-    return render_template('appointments.html', appointments=appointments)
+@app.route('/api/flight-trends')
+def get_flight_trends():
+    data = load_data()
+    # 直接返回JSON中的flight_trends数据
+    flight_trends = data.get('flight_trends', [])
+    return jsonify(flight_trends)
 
-@app.route('/adsb-tracker')
-def adsb_tracker():
-    return render_template('adsb-tracker.html')
+@app.route('/api/airport-stats')
+def get_airport_stats():
+    data = load_data()
+    # 直接返回JSON中的airport_stats数据
+    airport_stats = data.get('airport_stats', [])
+    return jsonify(airport_stats)
 
-@app.route('/calendar')
-def calendar():
-    events = AviationEvent.query.order_by(AviationEvent.start_date).all()
-    return render_template('calendar.html', events=events)
+@app.route('/api/aircraft-types')
+def get_aircraft_types():
+    data = load_data()
+    # 直接返回JSON中的aircraft_types数据
+    aircraft_types = data.get('aircraft_types', [])
+    return jsonify(aircraft_types)
 
-@app.route('/special-flights')
-def special_flights():
-    flights = FlightEvent.query.filter(FlightEvent.status != 'completed').order_by(FlightEvent.scheduled_time).all()
-    return render_template('special-flights.html', flights=flights)
+@app.route('/api/airlines-market-share')
+def get_airlines_market_share():
+    data = load_data()
+    # 直接返回JSON中的airlines_market_share数据
+    airlines_market_share = data.get('airlines_market_share', [])
+    return jsonify(airlines_market_share)
 
-@app.route('/atc-streams')
-def atc_streams():
-    return render_template('atc-streams.html')
-
-# API路由
-@app.route('/api/appointments', methods=['POST'])
-def create_appointment():
-    data = request.get_json()
-    appointment = Appointment(
-        photographer_name=data['photographer_name'],
-        location=data['location'],
-        date=datetime.strptime(data['date'], '%Y-%m-%d').date(),
-        description=data.get('description'),
-        contact_info=data['contact_info']
-    )
-    db.session.add(appointment)
-    db.session.commit()
-    return jsonify({'status': 'success', 'id': appointment.id})
-
-@app.route('/api/flights', methods=['POST'])
-def create_flight_event():
-    data = request.get_json()
-    flight = FlightEvent(
-        flight_number=data['flight_number'],
-        airline=data.get('airline'),
-        aircraft_type=data.get('aircraft_type'),
-        departure=data.get('departure'),
-        destination=data.get('destination'),
-        scheduled_time=datetime.strptime(data['scheduled_time'], '%Y-%m-%dT%H:%M:%S'),
-        status=data.get('status', 'scheduled')
-    )
-    db.session.add(flight)
-    db.session.commit()
-    return jsonify({'status': 'success', 'id': flight.id})
-
-@app.route('/api/events', methods=['POST'])
-def create_event():
-    data = request.get_json()
-    event = AviationEvent(
-        title=data['title'],
-        event_type=data['event_type'],
-        location=data.get('location'),
-        start_date=datetime.strptime(data['start_date'], '%Y-%m-%d').date(),
-        end_date=datetime.strptime(data['end_date'], '%Y-%m-%d').date() if data.get('end_date') else None,
-        description=data.get('description'),
-        website=data.get('website')
-    )
-    db.session.add(event)
-    db.session.commit()
-    return jsonify({'status': 'success', 'id': event.id})
+@app.route('/api/flight-statuses')
+def get_flight_statuses():
+    data = load_data()
+    # 直接返回JSON中的flight_statuses数据
+    flight_statuses = data.get('flight_statuses', [])
+    return jsonify(flight_statuses)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
