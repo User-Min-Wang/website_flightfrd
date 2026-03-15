@@ -5,35 +5,37 @@ node_modules/
 # Build outputs
 dist/
 build/
+*.js
+*.ts
 
-# Environment variables
+# Environment
 .env
 .env.local
 *.env.*
 
-# Editor files
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
-*.tmp
 
-# Logs
-*.log
-
-# Python specific
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-.python-version
 
-# Coverage reports
+# Logs
+*.log
+
+# Temp files
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
 coverage/
 htmlcov/
 .coverage
@@ -42,7 +44,7 @@ htmlcov/
 .pytest_cache/
 .mypy_cache/
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# Virtual environments
+.venv/
+venv/
 ```

@@ -12,7 +12,7 @@ class AircraftSchema(BaseModel):
     serial_number: Optional[str] = Field(None, max_length=50, description="Serial number")
     operator: Optional[str] = Field(None, max_length=100, description="Operator/Owner")
     built_date: Optional[date] = Field(None, description="Date of manufacture")
-    status: Optional[str] = Field("active", regex=r"^(active|retired|stored)$", description="Status of aircraft")
+    status: Optional[str] = Field("active", pattern=r"^(active|retired|stored)$", description="Status of aircraft")
     first_flight_date: Optional[date] = Field(None, description="First flight date")
     registration_date: Optional[date] = Field(None, description="Registration date")
     registration_expiry: Optional[date] = Field(None, description="Registration expiry date")
