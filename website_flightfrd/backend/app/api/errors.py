@@ -25,13 +25,15 @@ def error_response(status_code, message=None):
     return response
 
 
-def bad_request(message=None):
+def bad_request(e):
     """Handle 400 Bad Request errors"""
+    message = str(e.description) if hasattr(e, 'description') else 'Bad request'
     return error_response(400, message)
 
 
-def not_found(message=None):
+def not_found(e):
     """Handle 404 Not Found errors"""
+    message = str(e.description) if hasattr(e, 'description') else 'The requested resource was not found'
     return error_response(404, message)
 
 

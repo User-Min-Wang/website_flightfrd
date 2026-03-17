@@ -13,7 +13,7 @@ class FlightSchema(BaseModel):
     arrival_time: Optional[datetime] = Field(None, description="Scheduled arrival time")
     actual_departure: Optional[datetime] = Field(None, description="Actual departure time")
     actual_arrival: Optional[datetime] = Field(None, description="Actual arrival time")
-    status: Optional[str] = Field("scheduled", regex=r"^(scheduled|active|landed|cancelled|delayed)$", 
+    status: Optional[str] = Field("scheduled", pattern=r"^(scheduled|active|landed|cancelled|delayed)$", 
                                   description="Flight status")
     origin_country: Optional[str] = Field(None, max_length=100, description="Origin country")
     destination_country: Optional[str] = Field(None, max_length=100, description="Destination country")

@@ -5,28 +5,46 @@ node_modules/
 # Build outputs
 dist/
 build/
-target/
+*.js
+*.ts
 
-# TypeScript/Vue specific
-*.tsbuildinfo
-.nuxt/
-.next/
-.un~*
-
-# Environment variables
+# Environment
 .env
 .env.local
-.env.*
+*.env.*
 
-# IDE files
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
 # Logs
 *.log
 
-# Temporary files
+# Temp files
 *.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
 ```
