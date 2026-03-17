@@ -1,6 +1,5 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
-from app.api.v1 import bp
 
 
 def register_error_handlers(app):
@@ -8,11 +7,6 @@ def register_error_handlers(app):
     app.register_error_handler(400, bad_request)
     app.register_error_handler(404, not_found)
     app.register_error_handler(500, internal_error)
-    
-    # Register with blueprint as well for API-specific errors
-    bp.register_error_handler(400, bad_request)
-    bp.register_error_handler(404, not_found)
-    bp.register_error_handler(500, internal_error)
 
 
 def error_response(status_code, message=None):

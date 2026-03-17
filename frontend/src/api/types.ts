@@ -19,21 +19,38 @@ export interface ListResponse<T> {
   pagination: PaginationInfo
 }
 
-// Authentication related types
-export interface LoginCredentials {
+// User related types
+export interface User {
+  id: number
   username: string
+  email: string
+  first_name?: string
+  last_name?: string
+  role: string
+  is_active: boolean
+  is_verified: boolean
+  created_at: string
+  updated_at: string
+}
+
+// Authentication related types
+export interface LoginRequest {
+  identity: string  // Can be username or email
   password: string
 }
 
+export interface RegisterRequest {
+  username: string
+  email: string
+  password: string
+  first_name?: string
+  last_name?: string
+}
+
 export interface AuthResponse {
-  access_token: string
-  refresh_token?: string
-  user: {
-    id: number
-    username: string
-    email: string
-    role: string
-  }
+  message: string
+  token: string
+  user: User
 }
 
 // Error response type

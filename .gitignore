@@ -1,17 +1,17 @@
 ```
 # Dependencies
 node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Build outputs
+# Build artifacts
 dist/
 build/
-target/
-
-# TypeScript/Vue specific
-*.tsbuildinfo
-.nuxt/
-.next/
-.un~*
+*.egg-info/
 
 # Environment variables
 .env
@@ -27,6 +27,12 @@ target/
 # Logs
 *.log
 
-# Temporary files
-*.tmp
+# Coverage
+.coverage
+coverage/
+htmlcov/
+
+# OS generated files
+.DS_Store
+Thumbs.db
 ```
