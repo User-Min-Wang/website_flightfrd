@@ -27,15 +27,22 @@ def make_celery(app):
     celery.Task = ContextTask
     return celery
 
-    global celery  # Declare celery as global so we can assign to it
+
+# Initialize celery instance (to be called from app factory)
+celery = None
+
+
+def init_celery(app):
+    """Initialize celery with Flask app"""
+    global celery
     celery = make_celery(app)
+    return celery
+
 
 # Initialize ADS-B service for tasks
 adsb_service = ADSBService()
 
 
-@celery.task
-def fetch_adsb_data_task(icao_codes=None):
 @celery.task
 def fetch_adsb_data_task(icao_codes=None):
     """
@@ -70,7 +77,6 @@ def fetch_adsb_data_task(icao_codes=None):
 
 
 @celery.task
-def fetch_adsb_data_task(icao_codes=None):
 def fetch_all_aircraft_data():
     """
     Periodic task to fetch ADS-B data for all tracked aircraft
@@ -112,7 +118,6 @@ def fetch_all_aircraft_data():
 
 
 @celery.task
-def fetch_adsb_data_task(icao_codes=None):
 def cleanup_old_positions():
     """
     Periodic task to clean up old flight position records
