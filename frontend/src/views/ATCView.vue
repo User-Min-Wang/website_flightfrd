@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/ATCView.vue
-  <div class="atc-view">
-    <h1>ATC View</h1>
-    <p>空中交通管制界面 - 开发中...</p>
-=======
+
   <div class="atc-page">
     <div class="atc-header">
       <h1>ATC Communications</h1>
@@ -44,19 +40,12 @@
         <p>No ATC messages available</p>
       </div>
     </div>
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/ATCView.vue
+
   </div>
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/ATCView.vue
-// ATC 视图逻辑
-</script>
 
-<style scoped>
-.atc-view {
-  padding: 20px;
-=======
 import { ref, computed } from 'vue'
 import { formatFrequency, formatDate } from '@/utils/formatters'
 
@@ -216,6 +205,6 @@ const toggleStream = () => {
   text-align: center;
   padding: 40px;
   color: #7f8c8d;
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/ATCView.vue
+
 }
 </style>

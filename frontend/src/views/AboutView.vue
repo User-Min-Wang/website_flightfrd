@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/AboutView.vue
-  <div class="about-view">
-    <h1>About FlightFRD</h1>
-    <p>FlightFRD - 航班追踪与管理系统</p>
-    <p>版本：1.0.0</p>
-=======
+
   <div class="about-page">
     <div class="about-container">
       <h1>About FlightFRD</h1>
@@ -60,19 +55,12 @@
         </p>
       </section>
     </div>
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/AboutView.vue
+
   </div>
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/AboutView.vue
-// 关于页面逻辑
-</script>
 
-<style scoped>
-.about-view {
-  padding: 20px;
-=======
 // About page component
 </script>
 

@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/CalendarView.vue
-  <div class="calendar-view">
-    <h1>Calendar View</h1>
-    <p>日历视图 - 开发中...</p>
-=======
+
   <div class="calendar-page">
     <div class="calendar-header">
       <h1>Flight Calendar</h1>
@@ -60,19 +56,12 @@
         </div>
       </div>
     </div>
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/CalendarView.vue
+
   </div>
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/CalendarView.vue
-// 日历视图逻辑
-</script>
 
-<style scoped>
-.calendar-view {
-  padding: 20px;
-=======
 import { ref, computed } from 'vue'
 
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -312,6 +301,6 @@ const nextMonth = () => {
   gap: 20px;
   color: #34495e;
   font-size: 0.9rem;
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/CalendarView.vue
+
 }
 </style>

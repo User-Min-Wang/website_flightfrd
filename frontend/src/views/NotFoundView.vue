@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/NotFoundView.vue
-  <div class="not-found-view">
-    <h1>404 - Page Not Found</h1>
-    <p>抱歉，您访问的页面不存在。</p>
-    <router-link to="/">返回首页</router-link>
-=======
+
   <div class="not-found-page">
     <div class="not-found-container">
       <h1>404</h1>
@@ -12,20 +7,12 @@
       <p>The page you're looking for doesn't exist or has been moved.</p>
       <router-link to="/" class="btn btn-primary">Go Home</router-link>
     </div>
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/NotFoundView.vue
+
   </div>
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD:website_flightfrd/frontend/src/views/NotFoundView.vue
-// 404 页面逻辑
-</script>
 
-<style scoped>
-.not-found-view {
-  padding: 20px;
-  text-align: center;
-=======
 // 404 Not Found page component
 </script>
 
@@ -83,6 +70,6 @@
 
 .btn-primary:hover {
   background-color: #2980b9;
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/NotFoundView.vue
+
 }
 </style>
