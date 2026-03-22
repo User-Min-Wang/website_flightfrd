@@ -141,6 +141,5 @@
 
 .about-section a:hover {
   text-decoration: underline;
->>>>>>> origin/qwen-code-e1a46bfa-6c37-401a-848f-f7993735917e:frontend/src/views/AboutView.vue
 }
 </style>
