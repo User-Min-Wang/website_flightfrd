@@ -1,0 +1,122 @@
+export default {
+  common: {
+    loading: 'Loading...',
+    submit: 'Submit',
+    cancel: 'Cancel',
+    save: 'Save',
+    delete: 'Delete',
+    edit: 'Edit',
+    search: 'Search',
+    confirm: 'Confirm',
+    back: 'Back',
+    close: 'Close',
+    yes: 'Yes',
+    no: 'No',
+    success: 'Success',
+    error: 'Error',
+    warning: 'Warning',
+    info: 'Info'
+  },
+  nav: {
+    home: 'Home',
+    aircraft: 'Aircraft',
+    atc: 'ATC',
+    calendar: 'Calendar',
+    about: 'About',
+    login: 'Login',
+    register: 'Register',
+    logout: 'Logout',
+    flightList: 'Flight List'
+  },
+  auth: {
+    login: 'Login',
+    register: 'Register',
+    logout: 'Logout',
+    username: 'Username',
+    password: 'Password',
+    email: 'Email',
+    confirmPassword: 'Confirm Password',
+    forgotPassword: 'Forgot Password?',
+    noAccount: "Don't have an account?",
+    hasAccount: 'Already have an account?',
+    loginSuccess: 'Login successful',
+    loginFailed: 'Login failed',
+    registerSuccess: 'Registration successful',
+    registerFailed: 'Registration failed',
+    verifyEmail: 'Verify Email',
+    verificationCode: 'Verification Code'
+  },
+  aircraft: {
+    title: 'Aircraft Management',
+    addAircraft: 'Add Aircraft',
+    editAircraft: 'Edit Aircraft',
+    deleteAircraft: 'Delete Aircraft',
+    registration: 'Registration',
+    type: 'Type',
+    status: 'Status',
+    owner: 'Owner',
+    actions: 'Actions',
+    noAircraft: 'No aircraft data'
+  },
+  atc: {
+    title: 'ATC Communication',
+    frequency: 'Frequency',
+    message: 'Message',
+    send: 'Send',
+    clear: 'Clear',
+    station: 'Station',
+    messages: 'Messages'
+  },
+  calendar: {
+    title: 'Flight Calendar',
+    addEvent: 'Add Event',
+    editEvent: 'Edit Event',
+    deleteEvent: 'Delete Event',
+    eventTitle: 'Event Title',
+    date: 'Date',
+    time: 'Time',
+    description: 'Description',
+    location: 'Location',
+    type: 'Type',
+    noEvents: 'No events'
+  },
+  flight: {
+    title: 'Flight Information',
+    flightNumber: 'Flight Number',
+    departure: 'Departure',
+    arrival: 'Arrival',
+    departureTime: 'Departure Time',
+    arrivalTime: 'Arrival Time',
+    status: 'Status',
+    altitude: 'Altitude',
+    speed: 'Speed',
+    heading: 'Heading',
+    squawk: 'Squawk',
+    emergency: 'Emergency'
+  },
+  user: {
+    profile: 'Profile',
+    settings: 'Settings',
+    preferences: 'Preferences',
+    language: 'Language',
+    theme: 'Theme',
+    notifications: 'Notifications'
+  },
+  errors: {
+    required: 'This field is required',
+    invalidEmail: 'Invalid email format',
+    invalidPassword: 'Invalid password format',
+    minLength: 'Minimum length is {min} characters',
+    maxLength: 'Maximum length is {max} characters',
+    notFound: 'Page not found',
+    serverError: 'Server error',
+    networkError: 'Network error',
+    unauthorized: 'Unauthorized access'
+  },
+  footer: {
+    copyright: '© 2024 FlightFRD. All rights reserved.',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    contactUs: 'Contact Us'
+  }
+}

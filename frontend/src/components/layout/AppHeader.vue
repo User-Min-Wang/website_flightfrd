@@ -2,24 +2,24 @@
   <header class="app-header">
     <div class="header-container">
       <div class="logo">
-        <router-link to="/">FlightFRD</router-link>
+        <router-link to="/">{{ $t('nav.home') }}</router-link>
       </div>
       
       <nav class="main-nav" v-if="isAuthenticated">
-        <router-link to="/aircraft">Aircraft</router-link>
-        <router-link to="/atc">ATC</router-link>
-        <router-link to="/calendar">Calendar</router-link>
-        <router-link to="/about">About</router-link>
+        <router-link to="/aircraft">{{ $t('nav.aircraft') }}</router-link>
+        <router-link to="/atc">{{ $t('nav.atc') }}</router-link>
+        <router-link to="/calendar">{{ $t('nav.calendar') }}</router-link>
+        <router-link to="/about">{{ $t('nav.about') }}</router-link>
       </nav>
       
       <div class="auth-buttons" v-if="!isAuthenticated">
-        <router-link to="/login" class="btn btn-outline">Login</router-link>
-        <router-link to="/register" class="btn btn-primary">Register</router-link>
+        <router-link to="/login" class="btn btn-outline">{{ $t('nav.login') }}</router-link>
+        <router-link to="/register" class="btn btn-primary">{{ $t('nav.register') }}</router-link>
       </div>
       
       <div class="user-menu" v-else>
         <span class="username">{{ currentUser?.username }}</span>
-        <button @click="handleLogout" class="btn btn-outline btn-sm">Logout</button>
+        <button @click="handleLogout" class="btn btn-outline btn-sm">{{ $t('nav.logout') }}</button>
       </div>
     </div>
   </header>

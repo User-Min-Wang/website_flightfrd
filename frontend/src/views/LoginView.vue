@@ -1,29 +1,29 @@
 <template>
   <div class="login-page">
     <div class="login-container">
-      <h1>Login</h1>
+      <h1>{{ $t('auth.login') }}</h1>
       
       <form @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="identity">Username or Email</label>
+          <label for="identity">{{ $t('auth.username') }} / {{ $t('auth.email') }}</label>
           <input 
             type="text" 
             id="identity" 
             v-model="formData.identity" 
             required
-            placeholder="Enter your username or email"
+            :placeholder="$t('auth.username')"
             class="form-input"
           />
         </div>
         
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">{{ $t('auth.password') }}</label>
           <input 
             type="password" 
             id="password" 
             v-model="formData.password" 
             required
-            placeholder="Enter your password"
+            :placeholder="$t('auth.password')"
             class="form-input"
           />
         </div>
@@ -33,12 +33,12 @@
         </div>
         
         <button type="submit" class="btn btn-primary btn-block" :disabled="isLoading">
-          {{ isLoading ? 'Logging in...' : 'Login' }}
+          {{ isLoading ? $t('common.loading') : $t('auth.login') }}
         </button>
       </form>
       
       <div class="login-footer">
-        <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
+        <p>{{ $t('auth.noAccount') }} <router-link to="/register">{{ $t('nav.register') }}</router-link></p>
       </div>
     </div>
   </div>

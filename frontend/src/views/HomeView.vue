@@ -1,33 +1,33 @@
 <template>
   <div class="home">
     <div class="hero-section">
-      <h1>Aircraft Tracking Dashboard</h1>
-      <p>Real-time monitoring of aircraft movements and air traffic control communications</p>
+      <h1>{{ $t('flight.title') }}</h1>
+      <p>{{ $t('common.info') }} - {{ $t('atc.messages') }}</p>
     </div>
 
     <div class="dashboard-grid">
       <!-- Map Section -->
       <section class="map-section">
         <div class="section-header">
-          <h2>Live Aircraft Map</h2>
+          <h2>{{ $t('nav.home') }}</h2>
           <div class="controls">
             <button @click="toggleLabels" class="btn btn-sm">
-              {{ showLabels ? 'Hide Labels' : 'Show Labels' }}
+              {{ showLabels ? $t('common.close') : $t('common.info') }}
             </button>
             <button @click="toggleTrails" class="btn btn-sm">
-              {{ showTrails ? 'Hide Trails' : 'Show Trails' }}
+              {{ showTrails ? $t('common.close') : $t('flight.title') }}
             </button>
             <select v-model="selectedMapLayer" @change="changeMapLayer" class="form-select">
               <option value="osm">OpenStreetMap</option>
-              <option value="satellite">Satellite</option>
-              <option value="terrain">Terrain</option>
+              <option value="satellite">{{ $t('user.theme') }}</option>
+              <option value="terrain">{{ $t('calendar.location') }}</option>
             </select>
           </div>
         </div>
         <div id="map-container" class="map-container">
           <!-- Map will be rendered here -->
           <div class="map-placeholder">
-            <p>Interactive map showing live aircraft positions</p>
+            <p>{{ $t('nav.home') }}</p>
           </div>
         </div>
       </section>
@@ -35,18 +35,18 @@
       <!-- Aircraft List Section -->
       <section class="aircraft-list-section">
         <div class="section-header">
-          <h2>Active Aircraft</h2>
+          <h2>{{ $t('nav.aircraft') }}</h2>
           <div class="controls">
             <input 
               v-model="searchQuery" 
-              placeholder="Search aircraft..." 
+              :placeholder="$t('common.search')" 
               class="form-input"
             />
             <select v-model="selectedStatus" class="form-select">
-              <option value="">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="scheduled">Scheduled</option>
-              <option value="landed">Landed</option>
+              <option value="">{{ $t('common.all') }}</option>
+              <option value="active">{{ $t('flight.status') }}</option>
+              <option value="scheduled">{{ $t('calendar.type') }}</option>
+              <option value="landed">{{ $t('flight.arrival') }}</option>
             </select>
           </div>
         </div>
@@ -60,7 +60,7 @@
             <div class="aircraft-info">
               <h3>{{ aircraft.callsign || 'N/A' }}</h3>
               <p class="icao-code">{{ aircraft.icao_code }}</p>
-              <p class="model">{{ aircraft.model || 'N/A' }}</p>
+              <p class="model">{{ aircraft.model || $t('common.notFound') }}</p>
             </div>
             <div class="aircraft-status">
               <span class="status-badge" :class="aircraft.status">{{ aircraft.status }}</span>
@@ -68,7 +68,7 @@
             </div>
           </div>
           <div v-if="filteredAircraft.length === 0" class="no-results">
-            <p>No aircraft found</p>
+            <p>{{ $t('errors.notFound') }}</p>
           </div>
         </div>
       </section>
@@ -76,14 +76,14 @@
       <!-- ATC Communications Section -->
       <section class="atc-section">
         <div class="section-header">
-          <h2>ATC Communications</h2>
+          <h2>{{ $t('nav.atc') }}</h2>
           <div class="controls">
             <select v-model="selectedFrequency" class="form-select">
-              <option value="">All Frequencies</option>
+              <option value="">{{ $t('common.all') }}</option>
               <option v-for="freq in frequencies" :key="freq" :value="freq">{{ freq }}</option>
             </select>
             <button @click="toggleATCStream" class="btn btn-sm">
-              {{ atcStreamActive ? 'Pause Stream' : 'Resume Stream' }}
+              {{ atcStreamActive ? $t('common.close') : $t('common.info') }}
             </button>
           </div>
         </div>
@@ -106,7 +106,7 @@
             </div>
           </div>
           <div v-if="displayedMessages.length === 0" class="no-results">
-            <p>No ATC messages available</p>
+            <p>{{ $t('atc.messages') }} {{ $t('errors.notFound') }}</p>
           </div>
         </div>
       </section>
@@ -114,19 +114,19 @@
       <!-- Stats Section -->
       <section class="stats-section">
         <div class="stat-card">
-          <h3>Total Aircraft</h3>
+          <h3>{{ $t('nav.aircraft') }}</h3>
           <p class="stat-value">{{ totalAircraft }}</p>
         </div>
         <div class="stat-card">
-          <h3>Active Flights</h3>
+          <h3>{{ $t('flight.status') }}</h3>
           <p class="stat-value">{{ activeFlights }}</p>
         </div>
         <div class="stat-card">
-          <h3>ATC Messages (Last Hour)</h3>
+          <h3>{{ $t('nav.atc') }} ({{ $t('calendar.time') }})</h3>
           <p class="stat-value">{{ atcMessagesLastHour }}</p>
         </div>
         <div class="stat-card">
-          <h3>Connected Users</h3>
+          <h3>{{ $t('user.settings') }}</h3>
           <p class="stat-value">{{ connectedUsers }}</p>
         </div>
       </section>
