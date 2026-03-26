@@ -3,6 +3,7 @@
 node_modules/
 
 # Build artifacts
+
 frontend/dist/
 
 # Environment variables
@@ -14,8 +15,10 @@ frontend/dist/
 .vscode/
 .idea/
 
+
 # Logs
 *.log
+
 
 # OS generated files
 .DS_Store
@@ -33,15 +36,37 @@ htmlcov/
 *.coverage
 
 # Python cache (if any Python files exist in frontend)
+
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Temporary files
-*.tmp
-*.temp
-*.bak
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# MyPy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+
+# Distribution / packaging
+.Python
+*.so
+.Python
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
 
 # Compressed files
 *.zip
