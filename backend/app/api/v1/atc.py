@@ -218,3 +218,31 @@ def handle_unsubscribe_frequency(data):
         # Remove client from room for this frequency
         leave_room(frequency, namespace='/atc')
         emit('unsubscribed', {'frequency': frequency})
+
+
+@socketio.on('subscribe_to_channel', namespace='/atc')
+def handle_subscribe_channel(data):
+    """Handle subscription to a specific airport channel"""
+    airport_code = data.get('airport_code')
+    channel_name = data.get('channel_name')
+    room = data.get('room')
+    
+    if room:
+        join_room(room, namespace='/atc')
+        emit('channel_subscribed', {
+            'airport_code': airport_code,
+            'channel_name': channel_name,
+            'room': room
+        })
+        print(f'Client subscribed to channel: {room}')
+
+
+@socketio.on('unsubscribe_from_channel', namespace='/atc')
+def handle_unsubscribe_channel(data):
+    """Handle unsubscription from a specific airport channel"""
+    room = data.get('room')
+    
+    if room:
+        leave_room(room, namespace='/atc')
+        emit('channel_unsubscribed', {'room': room})
+        print(f'Client unsubscribed from channel: {room}')

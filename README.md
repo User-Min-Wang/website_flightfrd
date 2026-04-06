@@ -1,6 +1,6 @@
 # FlightFRD - 航班管理系统
 
-一个现代化的航班管理系统，提供用户注册、邮箱验证、登录认证以及航班日历视图等功能。
+一个现代化的航班管理系统，提供用户注册、邮箱验证、登录认证以及航班日历视图等功能，**并集成了 ATC（空中交通管制）实时直播功能**。
 
 ## 📋 项目特性
 
@@ -10,6 +10,35 @@
 - ✅ **用户登录**：JWT Token 认证，安全的会话管理
 - ✅ **日历视图**：可视化展示航班信息，支持日期交互
 - ✅ **响应式设计**：适配桌面和移动设备
+- ✅ **ATC 直播**：实时音频流监听、语音转文字、消息分类、多频道显示
+- ✅ **中文翻译**：ATC 通信实时翻译（可选）
+
+### ATC 直播功能特性
+
+#### 🎧 音频流直播
+- 支持 LiveATC.net 和 SDR 硬件数据源
+- WebSocket 和 HTTP 流媒体处理
+- 多频道并发监听
+
+#### 🤖 AI 语音识别
+- **内置 OpenAI Whisper 模型**（自动下载）
+- 实时语音转文字
+- 自动提取航空呼号
+- 消息智能分类（起飞/降落/滑行/紧急等）
+
+#### 📺 分频道显示
+- 按机场分组（KJFK、KLAX、EGLL 等）
+- 按频道类型（Tower、Ground、Approach 等）
+- 可订阅/取消订阅特定频道
+
+#### 🌐 实时翻译
+- 可选的实时中英文翻译
+- 原文与译文对照显示
+
+#### ⚡ 实时推送
+- WebSocket 实时通信
+- 消息优先级排序
+- 紧急消息高亮闪烁
 
 ### 技术栈
 
@@ -20,6 +49,9 @@
 - **邮件服务**: Flask-Mail (SMTP)
 - **密码加密**: Werkzeug/Bcrypt
 - **API 规范**: RESTful API
+- **实时通信**: Flask-SocketIO
+- **语音识别**: OpenAI Whisper
+- **音频处理**: websocket-client, ffmpeg-python
 
 #### 前端 (Frontend)
 - **框架**: Vue 3 + TypeScript
@@ -28,6 +60,7 @@
 - **路由**: Vue Router
 - **UI 组件**: 自定义组件 + 响应式布局
 - **HTTP 客户端**: Axios
+- **WebSocket**: socket.io-client
 
 ## 📁 项目结构
 
@@ -38,6 +71,7 @@
 │   │   ├── api/           # API 路由
 │   │   ├── models/        # 数据模型
 │   │   ├── services/      # 业务逻辑
+│   │   │   └── audio_stream_service.py  # ATC 音频流处理
 │   │   ├── utils/         # 工具函数
 │   │   └── config.py      # 配置文件
 │   ├── requirements.txt   # Python 依赖
@@ -46,16 +80,20 @@
 ├── frontend/              # 前端代码
 │   ├── src/              # 源代码
 │   │   ├── views/        # 页面组件
+│   │   │   └── ATCView.vue  # ATC 直播页面
 │   │   ├── components/   # 可复用组件
 │   │   ├── stores/       # Pinia 状态管理
 │   │   ├── router/       # 路由配置
 │   │   ├── api/          # API 调用
+│   │   ├── composables/  # Vue 组合式函数
+│   │   │   └── useATCSocket.ts  # ATC WebSocket 连接
 │   │   └── types/        # TypeScript 类型定义
 │   ├── package.json      # Node.js 依赖
 │   └── vite.config.ts    # Vite 配置
 │
 ├── .gitignore           # Git 忽略文件
-└── README.md           # 项目说明
+├── README.md           # 项目说明
+└── ATC_LIVE_COMPLETE_GUIDE.md  # ATC 直播详细指南
 ```
 
 ## 🚀 本地部署指南
@@ -65,6 +103,10 @@
 #### 后端
 - Python 3.8+
 - pip (Python 包管理器)
+- **FFmpeg**（用于音频处理）：
+  - Ubuntu/Debian: `sudo apt-get install ffmpeg`
+  - macOS: `brew install ffmpeg`
+  - Windows: 从 https://ffmpeg.org/download.html 下载
 
 #### 前端
 - Node.js 16+
@@ -83,6 +125,13 @@ cd /workspace
 cd backend
 pip install -r requirements.txt
 ```
+
+> ⚠️ **ATC 功能依赖说明**:
+> - `openai-whisper`: OpenAI 语音识别模型，首次运行时会自动下载模型文件（约 140MB）
+> - `websocket-client`: 用于连接 LiveATC.net 等音频流
+> - `ffmpeg-python`: 音频处理工具，需要系统已安装 FFmpeg
+> - `sounddevice`: 音频设备访问（可选，用于 SDR 硬件）
+> - `scipy`: 科学计算库，用于音频信号处理
 
 #### 配置环境变量
 创建 `.env` 文件在 `backend/` 目录下：
@@ -110,6 +159,11 @@ MAIL_DEFAULT_SENDER=your-email@gmail.com
 
 # 前端地址 (用于 CORS)
 FRONTEND_URL=http://localhost:5173
+
+# ATC 直播配置（可选）
+ATC_ENABLED=true
+WHISPER_MODEL=base  # 可选：tiny, base, small, medium, large
+TRANSLATION_ENABLED=false
 ```
 
 > ⚠️ **注意**: 
@@ -163,6 +217,39 @@ yarn dev
 ### 4. 访问应用
 
 打开浏览器访问：`http://localhost:5173`
+
+### 5. 使用 ATC 直播功能
+
+#### 访问 ATC 直播页面
+访问 `http://localhost:5173/atc` 进入 ATC 直播界面
+
+#### 配置音频源
+在 `.env` 文件中配置或使用预设的 LiveATC.net 流：
+
+```bash
+# 预设机场频率（已在代码中配置）
+- KJFK (纽约肯尼迪): Tower 118.7, Ground 121.9, Approach 125.25
+- KLAX (洛杉矶): Tower 120.35, Ground 121.75, Approach 124.9
+- EGLL (伦敦希思罗): Tower 118.5, Ground 121.7, Approach 119.2
+- RJTT (东京羽田): Tower 118.1, Ground 121.6, Approach 119.1
+- ZBAA (北京首都): Tower 118.5, Ground 121.9, Approach 119.7
+- VHHH (香港): Tower 118.4, Ground 121.8, Approach 119.3
+```
+
+#### 使用 SDR 硬件（可选）
+如需使用 RTL-SDR 硬件接收真实无线电：
+```bash
+# 安装 RTL-SDR 驱动
+pip install pyrtlsdr
+
+# Ubuntu/Debian
+sudo apt-get install rtl-sdr librtlsdr-dev
+
+# macOS
+brew install rtlsdr
+
+# 连接 RTL-SDR 设备后，在应用中配置频率
+```
 
 ## 📝 API 端点
 
@@ -261,6 +348,68 @@ npm run lint
 - 删除 `instance/` 目录和 `.db` 文件重新初始化
 - 或使用 Flask-Migrate 进行数据库迁移管理
 
+### ATC 语音识别不工作？
+1. **检查 Whisper 模型是否下载**：
+   - 首次运行时会自动下载模型（约 140MB）
+   - 手动下载：`python -c "import whisper; whisper.load_model('base')"`
+   - 模型存储位置：`~/.cache/whisper/`
+
+2. **检查 FFmpeg 是否安装**：
+   ```bash
+   ffmpeg -version  # 检查是否安装
+   sudo apt-get install ffmpeg  # Ubuntu/Debian 安装
+   brew install ffmpeg  # macOS 安装
+   ```
+
+3. **查看后端日志**：
+   - 确认没有 "Whisper not installed" 警告
+   - 检查音频流连接状态
+
+4. **调整模型大小**（如果性能不足）：
+   ```bash
+   # 在 .env 中修改
+   WHISPER_MODEL=tiny  # 更快但精度较低
+   # 可选：tiny (39M), base (74M), small (244M), medium (769M), large (1550M)
+   ```
+
+### LiveATC.net 流无法连接？
+- LiveATC.net 限制非商业用途，建议仅用于测试
+- 考虑使用 SDR 硬件接收本地机场信号
+- 或购买商业航空数据服务
+
+## 🤖 AI 模型说明
+
+### OpenAI Whisper 模型
+
+本项目使用 OpenAI Whisper 进行语音识别，模型会自动下载。
+
+#### 模型下载地址
+- **官方源**（自动下载）：https://openaipublic.azureedge.net/main/whisper/models/
+- **手动下载**（如果自动下载失败）：
+
+| 模型 | 大小 | 下载链接 | 适用场景 |
+|------|------|---------|---------|
+| tiny | 39 MB | [下载](https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt) | 低配置设备 |
+| base | 74 MB | [下载](https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt) | 推荐默认 |
+| small | 244 MB | [下载](https://openaipublic.azureedge.net/main/whisper/models/f953ad0fd29cacd07d5a9eda56200b7e07378584f1306f58bfe242f80c3eb83c/small.pt) | 高精度需求 |
+| medium | 769 MB | [下载](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt) | 专业用途 |
+| large | 1550 MB | [下载](https://openaipublic.azureedge.net/main/whisper/models/e5b1a55b89c1367dacf97e3e19bfd82964718a94f0dd8aa6486ba16b656cb2cd/large-v3.pt) | 最高精度 |
+
+#### 手动安装模型
+```bash
+# 1. 下载模型文件
+wget https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt -O ~/.cache/whisper/base.pt
+
+# 2. 或在代码中指定路径
+# 修改 backend/app/services/audio_stream_service.py
+self.whisper_model = whisper.load_model("/path/to/base.pt")
+```
+
+#### 模型要求
+- **CPU**: base 模型约 1-2 秒延迟
+- **GPU**: 支持 CUDA，可大幅提升速度
+- **内存**: base 模型至少需要 1GB RAM
+
 ## 📄 许可证
 
 本项目采用 MIT 许可证
@@ -268,6 +417,11 @@ npm run lint
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
+
+## 📚 相关文档
+
+- [ATC 直播完整实现指南](ATC_LIVE_COMPLETE_GUIDE.md) - 详细的 ATC 功能实现说明
+- [部署教程](DEPLOYMENT_TUTORIAL.md) - 生产环境部署指南
 
 ## 📞 联系方式
 
