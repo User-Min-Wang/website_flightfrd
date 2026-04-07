@@ -35,4 +35,13 @@ htmlcov/
 # Testing
 .pytest_cache/
 .mypy_cache/
+
+# node_modules 
+node_modules/
+
+dist/
+.vite/
+
+.DS_Store
+Thumbs.db
 ```
