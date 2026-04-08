@@ -2,55 +2,53 @@
 
   <div class="about-page">
     <div class="about-container">
-      <h1>About FlightFRD</h1>
+      <h1>{{ $t('about.title') }}</h1>
       
       <section class="about-section">
-        <h2>Our Mission</h2>
+        <h2>{{ $t('about.mission') }}</h2>
         <p>
-          FlightFRD is a comprehensive aircraft tracking and air traffic control monitoring platform. 
-          We provide real-time data on aircraft movements, ATC communications, and flight information 
-          to aviation enthusiasts, professionals, and researchers.
+          {{ $t('about.missionText') }}
         </p>
       </section>
       
       <section class="about-section">
-        <h2>Features</h2>
+        <h2>{{ $t('about.features') }}</h2>
         <ul class="features-list">
           <li>
-            <strong>Live Aircraft Tracking</strong>
-            <p>Monitor aircraft positions in real-time with detailed flight information</p>
+            <strong>{{ $t('about.liveTracking') }}</strong>
+            <p>{{ $t('about.liveTrackingDesc') }}</p>
           </li>
           <li>
-            <strong>ATC Communications</strong>
-            <p>Access air traffic control message logs and communications</p>
+            <strong>{{ $t('about.atcComm') }}</strong>
+            <p>{{ $t('about.atcCommDesc') }}</p>
           </li>
           <li>
-            <strong>Flight Calendar</strong>
-            <p>View scheduled flights and historical flight data</p>
+            <strong>{{ $t('about.flightCalendar') }}</strong>
+            <p>{{ $t('about.flightCalendarDesc') }}</p>
           </li>
           <li>
-            <strong>Aircraft Database</strong>
-            <p>Browse detailed information about various aircraft types</p>
+            <strong>{{ $t('about.aircraftDB') }}</strong>
+            <p>{{ $t('about.aircraftDBDesc') }}</p>
           </li>
         </ul>
       </section>
       
       <section class="about-section">
-        <h2>Data Sources</h2>
+        <h2>{{ $t('about.dataSources') }}</h2>
         <p>
-          Our platform aggregates data from multiple sources including:
+          {{ $t('about.dataSourcesText') }}
         </p>
         <ul>
-          <li>OpenSky Network API for ADS-B aircraft position data</li>
-          <li>Public ATC communication feeds</li>
-          <li>User-contributed flight information and images</li>
+          <li>{{ $t('about.opensky') }}</li>
+          <li>{{ $t('about.publicATC') }}</li>
+          <li>{{ $t('about.userContributed') }}</li>
         </ul>
       </section>
       
       <section class="about-section">
-        <h2>Contact Us</h2>
+        <h2>{{ $t('about.contact') }}</h2>
         <p>
-          Have questions or suggestions? Reach out to us at:
+          {{ $t('about.contactText') }}
           <a href="mailto:info@flightfrd.com">info@flightfrd.com</a>
         </p>
       </section>

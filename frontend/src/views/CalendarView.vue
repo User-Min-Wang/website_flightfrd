@@ -2,11 +2,11 @@
 
   <div class="calendar-page">
     <div class="calendar-header">
-      <h1>Flight Calendar</h1>
+      <h1>{{ $t('calendar.title') }}</h1>
       <div class="controls">
-        <button @click="previousMonth" class="btn btn-outline">&lt;</button>
+        <button @click="previousMonth" class="btn btn-outline" :aria-label="$t('calendar.previousMonth')">&lt;</button>
         <span class="current-month">{{ currentMonthYear }}</span>
-        <button @click="nextMonth" class="btn btn-outline">&gt;</button>
+        <button @click="nextMonth" class="btn btn-outline" :aria-label="$t('calendar.nextMonth')">&gt;</button>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
             {{ flight.callsign }}
           </div>
           <div v-if="day.flights.length > 3" class="more-flights">
-            +{{ day.flights.length - 3 }} more
+            {{ $t('calendar.moreFlights', { count: day.flights.length - 3 }) }}
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@
 
     <!-- Selected day flights -->
     <div v-if="selectedDayFlights.length > 0" class="selected-day-flights">
-      <h2>Flights for {{ selectedDate }}</h2>
+      <h2>{{ $t('calendar.flightsForDate', { date: selectedDate }) }}</h2>
       <div class="flights-list">
         <div v-for="flight in selectedDayFlights" :key="flight.id" class="flight-card">
           <div class="flight-info">
@@ -50,8 +50,8 @@
             <span class="flight-route">{{ flight.origin }} → {{ flight.destination }}</span>
           </div>
           <div class="flight-times">
-            <span>Departure: {{ flight.departure_time }}</span>
-            <span>Arrival: {{ flight.arrival_time }}</span>
+            <span>{{ $t('calendar.departure') }}: {{ flight.departure_time }}</span>
+            <span>{{ $t('calendar.arrival') }}: {{ flight.arrival_time }}</span>
           </div>
         </div>
       </div>
@@ -63,8 +63,11 @@
 <script setup lang="ts">
 
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const { t } = useI18n()
+
+const weekdays = ['日', '一', '二', '三', '四', '五', '六']
 const currentDate = ref(new Date())
 const selectedDate = ref('')
 
@@ -76,7 +79,7 @@ const mockFlights = [
 ]
 
 const currentMonthYear = computed(() => {
-  return currentDate.value.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  return currentDate.value.toLocaleDateString('zh-CN', { month: 'long', year: 'numeric' })
 })
 
 const calendarDays = computed(() => {

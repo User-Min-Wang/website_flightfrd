@@ -81,7 +81,13 @@ export default {
     description: '描述',
     location: '地点',
     type: '类型',
-    noEvents: '暂无事件'
+    noEvents: '暂无事件',
+    previousMonth: '上个月',
+    nextMonth: '下个月',
+    flightsForDate: '{date} 的航班',
+    departure: '出发',
+    arrival: '到达',
+    moreFlights: '还有 {count} 个'
   },
   flight: {
     title: '航班信息',
@@ -121,5 +127,26 @@ export default {
     privacyPolicy: '隐私政策',
     termsOfService: '服务条款',
     contactUs: '联系我们'
+  },
+  about: {
+    title: '关于 FlightFRD',
+    mission: '我们的使命',
+    missionText: 'FlightFRD 是一个综合性的飞机追踪和空中交通管制监控平台。我们为航空爱好者、专业人士和研究人员提供有关飞机移动、空中交通管制通信和航班信息的实时数据。',
+    features: '功能特点',
+    liveTracking: '实时飞机追踪',
+    liveTrackingDesc: '实时监控飞机位置，提供详细的航班信息',
+    atcComm: '空中交通管制通信',
+    atcCommDesc: '访问空中交通管制消息日志和通信记录',
+    flightCalendar: '飞行日历',
+    flightCalendarDesc: '查看计划航班和历史航班数据',
+    aircraftDB: '飞机数据库',
+    aircraftDBDesc: '浏览各种飞机类型的详细信息',
+    dataSources: '数据来源',
+    dataSourcesText: '我们的平台聚合了来自多个来源的数据，包括：',
+    opensky: 'OpenSky Network API 提供 ADS-B 飞机位置数据',
+    publicATC: '公共空中交通管制通信源',
+    userContributed: '用户贡献的航班信息和图片',
+    contact: '联系我们',
+    contactText: '有问题或建议？请发送电子邮件至：'
   }
 }
