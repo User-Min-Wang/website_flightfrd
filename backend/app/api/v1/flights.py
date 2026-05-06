@@ -1,9 +1,11 @@
-from flask import jsonify, request
-from app.api.v1 import bp
+from flask import jsonify, request, Blueprint
 from app.models import Flight, Aircraft
 from app.schemas import FlightSchema
 from app.services import ADSBService
 from extensions import db
+
+# Create a separate blueprint for flights routes
+bp = Blueprint('flights', __name__)
 
 
 adsb_service = ADSBService()

@@ -1,6 +1,9 @@
-from flask import jsonify, request
+from flask import jsonify, request, Blueprint
 from flask_socketio import emit, join_room, leave_room
-from app.api.v1 import bp
+
+# Create a separate blueprint for atc routes
+bp = Blueprint('atc', __name__)
+
 from app.models import ATCMessage, Flight, User
 from app.services import ATCService
 from extensions import db, socketio

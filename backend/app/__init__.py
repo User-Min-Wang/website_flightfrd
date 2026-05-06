@@ -17,6 +17,13 @@ def create_app():
     
     # 注册蓝图
     from app.api.v1 import bp as api_v1_bp
+    from app.api.v1 import aircraft, flights, images, atc, calendar, auth
+    api_v1_bp.register_blueprint(aircraft.bp)
+    api_v1_bp.register_blueprint(flights.bp)
+    api_v1_bp.register_blueprint(images.bp)
+    api_v1_bp.register_blueprint(atc.bp)
+    api_v1_bp.register_blueprint(calendar.bp)
+    api_v1_bp.register_blueprint(auth.bp)
     app.register_blueprint(api_v1_bp, url_prefix='/api/v1')
     
     # 注册错误处理器
