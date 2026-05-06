@@ -1,7 +1,10 @@
-from flask import jsonify, request, send_from_directory
+from flask import jsonify, request, send_from_directory, Blueprint
 from werkzeug.utils import secure_filename
 import os
-from app.api.v1 import bp
+
+# Create a separate blueprint for images routes
+bp = Blueprint('images', __name__)
+
 from app.models import Image, Aircraft, User
 from app.services import ImageService
 from extensions import db

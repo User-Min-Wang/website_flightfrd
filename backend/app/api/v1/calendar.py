@@ -1,5 +1,8 @@
-from flask import jsonify, request
-from app.api.v1 import bp
+from flask import jsonify, request, Blueprint
+
+# Create a separate blueprint for calendar routes
+bp = Blueprint('calendar', __name__)
+
 from app.models import User, Aircraft
 from app.services import CalendarService
 from extensions import db
