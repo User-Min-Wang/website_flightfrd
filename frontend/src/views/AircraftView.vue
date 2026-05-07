@@ -272,6 +272,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useAircraftStore } from '@/stores/useAircraftStore'
+import { useAuthStore } from '@/stores/useAuthStore'
 import { useRoute, useRouter } from 'vue-router'
 import { formatDate, formatAltitude, formatSpeed } from '@/utils/formatters'
 
@@ -281,6 +282,7 @@ const router = useRouter()
 
 // Stores
 const aircraftStore = useAircraftStore()
+const authStore = useAuthStore()
 
 // Reactive data
 const loading = ref(false)
@@ -291,8 +293,8 @@ const currentPage = ref(1)
 const itemsPerPage = ref(12)
 const activeTab = ref('general')
 
-// Authentication mock
-const isAuthenticated = ref(true) // This would come from your auth store
+// Authentication
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 
 // Image modal
 const showImageModal = ref(false)

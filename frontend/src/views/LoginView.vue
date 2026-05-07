@@ -46,11 +46,12 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { LoginRequest } from '@/api/types'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const formData = reactive<LoginRequest>({
@@ -64,10 +65,14 @@ const error = ref<string | null>(null)
 const handleLogin = async () => {
   isLoading.value = true
   error.value = null
-  
+
   try {
     await authStore.login(formData)
-    router.push('/')
+    // 登录成功后拉取用户信息，确保状态已刷新
+    await authStore.fetchCurrentUser()
+    // Redirect to the intended page or home
+    const redirectPath = route.query.redirect as string || '/aircraft'
+    router.push(redirectPath)
   } catch (err: any) {
     error.value = err.response?.data?.error || 'Login failed. Please check your credentials.'
   } finally {

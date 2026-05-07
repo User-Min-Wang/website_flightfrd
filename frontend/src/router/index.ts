@@ -8,6 +8,7 @@ import NotFoundView from '../views/NotFoundView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import VerifyEmailView from '../views/VerifyEmailView.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,23 +21,27 @@ const router = createRouter({
     {
       path: '/aircraft',
       name: 'aircraft-list',
-      component: AircraftView
+      component: AircraftView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/aircraft/:id',
       name: 'aircraft-detail',
       component: AircraftView,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/atc',
       name: 'atc',
-      component: ATCView
+      component: ATCView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/calendar',
       name: 'calendar',
-      component: CalendarView
+      component: CalendarView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
@@ -64,6 +69,22 @@ const router = createRouter({
       component: NotFoundView
     }
   ]
+})
+
+// Navigation guard
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+
+  // Check if route requires authentication
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    // Redirect to login with return path
+    next({
+      name: 'login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
 })
 
 export default router
