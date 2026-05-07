@@ -6,6 +6,7 @@ from config import Config
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    CORS(app)
     
     # 初始化扩展
     from extensions import db, socketio, redis_client

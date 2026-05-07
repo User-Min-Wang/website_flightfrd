@@ -35,11 +35,15 @@ export function useATCSocket() {
   
   // 连接 WebSocket
   const connect = () => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
-    const wsUrl = apiUrl.replace('http', 'ws').replace('/api/v1', '')
-    
+    const apiBase = import.meta.env.VITE_API_BASE_URL || '/api/v1'
+    const apiUrl = apiBase.startsWith('/') ? `${window.location.origin}${apiBase}` : apiBase
+    let wsUrl = apiUrl.replace(/^http/, 'ws').replace(/\/api\/v1$/, '')
+    if (wsUrl.endsWith('/')) {
+      wsUrl = wsUrl.slice(0, -1)
+    }
+
     socket.value = io(wsUrl, {
-      path: '/socket.io/',
+      path: '/socket.io',
       transports: ['websocket'],
       reconnection: true,
       reconnectionAttempts: 5,
